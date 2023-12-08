@@ -1,102 +1,112 @@
-import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
 import React, { useState } from 'react';
+import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import Header from './src/Header';
+import List from './src/List';
+
 
 export default function meuappCli() {
-  const [img, setImg] = useState(require('./src/biscoito.png'))
-  const [frase, setFrase] = useState('')
+  const [feed, setFeed] = useState([{
+    id: '1',
+    nome: 'Lucas Silva',
+    descricao: 'Mais um dia de muitos bugs :)',
+    imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil1.png',
+    imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto1.png',
+    likeada: true,
+    likers: 1,
+  },
+    {
+      id: '2',
+      nome: 'Matheus',
+      descricao: 'Isso sim é ser raiz!!!!!',
+      imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil2.png',
+      imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto2.png',
+      likeada: false,
+      likers: 0,
+    },
+    {
+      id: '3',
+      nome: 'Jose Augusto',
+      descricao: 'Bora trabalhar, hoje estou começando em um projeto novo aqui no sujeito, desde o backend ao frontend',
+      imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil3.png',
+      imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto3.png',
+      likeada: false,
+      likers: 3,
+    },
+    {
+      id: '4',
+      nome: 'Gustavo Henrique',
+      descricao: 'Isso sim que é TI!',
+      imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil1.png',
+      imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto4.png',
+      likeada: false,
+      likers: 1,
+    },
+    {
+      id: '5',
+      nome: 'Guilherme',
+      descricao: 'Boa tarde galera do insta...',
+      imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil2.png',
+      imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto5.png',
+      likeada: false,
+      likers: 32,
+    }])
 
-  let frases = [
-    'Tudo o que um sonho precisa para ser realizado é alguém que acredite que ele possa ser realizado.',
-    'Imagine uma nova história para sua vida e acredite nela',
-    'A amizade desenvolve a felicidade e reduz o sofrimento, duplicando a nossa alegria e dividindo a nossa dor',
-    'Ser feliz sem motivo é a mais autêntica forma de felicidade',
-    'Não existe um caminho para a felicidade.A felicidade é o caminho',
-    'Não espere por uma crise para descobrir o que é importante em sua vida',
-    'Acredite em si e chegará um dia em que os outros não terão outra escolha senão acreditar com você.',
-  ]
-
-  function quebrarBiscoito() {
-    let numeroAleatorio = Math.floor(Math.random()* frases.length)
-
-    setFrase('" ' + frases[numeroAleatorio] + ' " ')
-    setImg(require('./src/biscoitoAberto.png'))
-
-  }
-
-  function reiniciarBiscoito(){
-    setFrase('')
-    setImg(require('./src/biscoito.png'))
-
-  }
 
 
   return (
     <View style={styles.container}>
 
-      <Image
-        style={styles.img}
-        source={img}
+      <Header />
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        data={feed}
+        renderItem={({ item }) => <List data={item} />}
       />
 
-      <Text style={styles.frase}>{frase}</Text>
-
-      <TouchableOpacity style={styles.botao} onPress={quebrarBiscoito}>
-        <View style={styles.areaBtn}>
-          <Text style={styles.textBotao}>Quebrar Biscoito</Text>
-        </View>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={[styles.botao, { borderColor: 'black', margin: 10, }]} onPress={reiniciarBiscoito}>
-        <View style={styles.areaBtn}>
-          <Text style={[styles.textBotao, { color: 'black' }]}>Reiniciar Biscoito</Text>
-        </View>
-      </TouchableOpacity>
-
     </View>
-
   );
 }
 
-
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: 'white',
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-
   },
-  img: {
-    width: 230,
-    height: 230,
-
-  },
-  frase: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    color: '#dd7b22',
+  title: {
+    fontSize: 30,
     textAlign: 'center',
-    fontStyle: 'italic',
-    margin: 30
+    color: 'black',
+    fontWeight: 'bold',
   },
-  botao: {
-    width: 230,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 25,
-    borderWidth: 3,
-    borderColor: '#dd7b22',
+  areaInput: {
+    marginTop: 30,
+    margin: 20,
+  },
+  inputs: {
+    borderWidth: 1,
+    marginTop: 10
+  },
+  desc: {
+    fontSize: 20,
+    color: 'black',
+    fontWeight: 'bold',
   },
   areaBtn: {
     flex: 1,
+    alignItems: 'center',
     justifyContent: 'center',
-
   },
-  textBotao: {
-    textAlign: 'center',
-    fontSize: 17,
-    fontWeight: 'bold',
-    color: '#dd7b22',
-
+  btn: {
+    width: 150,
+    height: 40,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'black'
+  },
+  titleBtn: {
+    color: 'white',
+    fontSize: 20,
+    textAlign: 'center'
   }
-})
+});
